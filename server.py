@@ -10,6 +10,7 @@ from PIL import Image
 
 import pygame.camera
 import pygame.image
+import codecs
 
 parser = argparse.ArgumentParser(description='Start the PyImageStream server.')
 
@@ -17,7 +18,7 @@ parser.add_argument('--port', default=8888, type=int, help='Web server port (def
 parser.add_argument('--camera', default=0, type=int, help='Camera index, first camera is 0 (default: 0)')
 parser.add_argument('--width', default=640, type=int, help='Width (default: 640)')
 parser.add_argument('--height', default=480, type=int, help='Height (default: 480)')
-parser.add_argument('--quality', default=70, type=int, help='JPEG Quality 1 (worst) to 100 (best) (default: 70)')
+parser.add_argument('--quality', default=100, type=int, help='JPEG Quality 1 (worst) to 100 (best) (default: 70)')
 parser.add_argument('--stopdelay', default=7, type=int, help='Delay in seconds before the camera will be stopped after '
                                                              'all clients have disconnected (default: 7)')
 args = parser.parse_args()
@@ -91,6 +92,10 @@ class MyServerProtocol(WebSocketServerProtocol):
 
 
    def onMessage(self, payload, isBinary):
+      print(payload)
+      message = codecs.decode(payload, 'hex')
+      messsage = message.decode()
+      print(message)
       payload =  camera.get_jpeg_image_bytes()
       # echo back message verbatim
       self.sendMessage(payload, True)
