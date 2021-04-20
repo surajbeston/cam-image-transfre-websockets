@@ -1,5 +1,5 @@
 attrs==19.3.0
-autobahn==20.1.2
+autobahn==20.12.3
 Automat==0.8.0
 cffi==1.13.2
 constantly==15.1.0
